@@ -7,11 +7,6 @@ func Sieve(limit int) []int {
 		return primes
 	}
 
-	if limit == 2 {
-		primes = append(primes, 2)
-		return primes
-	}
-
 	// map to maintain indication of prime number or not.
 	m := make(map[int]bool)
 	for i := 2; i <= limit; i++ {
