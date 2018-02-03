@@ -22,7 +22,7 @@ func Decode(s string, rails int) string {
 		decoded[i] = s[j:k]
 		j += len(lists[i])
 	}
-	up := false
+	var up bool
 	var result string
 	i := 0
 	j = 0
@@ -34,18 +34,17 @@ func Decode(s string, rails int) string {
 			break
 		}
 		i = indices[j]
+		// Move forward corresponding index.
 		indices[j] = i + 1
 		result += string(decoded[j][i])
 		if up {
 			j--
-			if j == 0 {
-				up = !up
-			}
 		} else {
 			j++
-			if j == rails-1 {
-				up = !up
-			}
+		}
+		// Flip direction on edges
+		if j == 0 || j == rails-1 {
+			up = !up
 		}
 		count++
 	}
@@ -60,14 +59,12 @@ func generateList(s string, rails int) []string {
 		arrange[j] += string(s[i])
 		if up {
 			j--
-			if j == 0 {
-				up = !up
-			}
 		} else {
 			j++
-			if j == rails-1 {
-				up = !up
-			}
+		}
+		// Flip direction on edges
+		if j == 0 || j == rails-1 {
+			up = !up
 		}
 	}
 	return arrange
